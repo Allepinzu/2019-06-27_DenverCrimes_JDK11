@@ -64,7 +64,7 @@ public void setGrafo(SimpleWeightedGraph<String, DefaultWeightedEdge> grafo) {
 		//Condizione di terminazione
 		if(parziale.get(parziale.size()-1).equals(last)) {
 			if(parziale.size()==grafo.vertexSet().size()) {
-			if(this.peso<this.pesoTot) {
+			if(this.peso<this.pesoTot)  {
 				this.pesoTot=peso;
 				this.soluzioni.clear();
 				this.soluzioni.addAll(parziale);
