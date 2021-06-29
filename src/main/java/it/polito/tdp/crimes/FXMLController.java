@@ -3,6 +3,8 @@ package it.polito.tdp.crimes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 import it.polito.tdp.crimes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,16 +25,16 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ComboBox<?> boxCategoria;
+    private ComboBox<String> boxCategoria;
 
     @FXML
-    private ComboBox<?> boxAnno;
+    private ComboBox<Integer> boxAnno;
 
     @FXML
     private Button btnAnalisi;
 
     @FXML
-    private ComboBox<?> boxArco;
+    private ComboBox<DefaultWeightedEdge> boxArco;
 
     @FXML
     private Button btnPercorso;
@@ -42,12 +44,19 @@ public class FXMLController {
 
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
-
+    	this.txtResult.clear();
+        for(String s: this.model.trovaSequenza(this.boxArco.getValue()))
+        		this.txtResult.appendText(s + "/n");
+        this.txtResult.appendText(String.valueOf(this.model.getPesoTot()));
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
 
+    	this.model.creaGrafo(this.boxAnno.getValue(), this.boxCategoria.getValue());
+    	this.txtResult.setText( this.model.VA()+"\n");
+    	this.txtResult.appendText(model.migliore());
+    	this.boxArco.getItems().addAll(model.getGrafo().edgeSet());
     }
 
     @FXML
@@ -63,5 +72,7 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model;
+		this.boxAnno.getItems().addAll(model.listaYear());
+		this.boxCategoria.getItems().addAll(model.listaCate());
 	}
 }
